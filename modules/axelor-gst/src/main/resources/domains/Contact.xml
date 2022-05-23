@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
+  
+  <module package="com.axelor.gst.app" name="gst"/>
+  
+  <entity name="Contact" cacheable="true">
+  	<string name="name" required="true" namecolumn="true"/>
+  	<string name="type"  selection="select-contact-type" required="true"/>
+  	<string name="primaryPhone"/>
+  	<string name="secondaryPhone"/>
+  	<string name="primaryEmail"/>
+  	<string name="secondaryEmail"/>
+  	<!-- <many-to-one ref="Party" name="party"/> -->
+  </entity>
+ </domain-models>

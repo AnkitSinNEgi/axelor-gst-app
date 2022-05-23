@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+  
+  
+  <menuitem title="Dashboard" name="menu-dashboard" action="dashboard.all"/>
+ 	     <action-view name="dashboard.all" title="Welcome">
+  	     <view type="dashboard" name="welcome-dashboard"/>
+ 	     </action-view>  
+  
+  <menuitem title="Dash" name="menu-dash" action="dash.all"/>
+ 	     <action-view name="dash.all" title="Welcome">
+ 	 	 <view type="dashboard" name="dashboard-all-charts"/>
+	 	 </action-view>
+ 
+  <!-- FOR PARTY -->
+ <menuitem title="Party" name="menu-party" icon="fa fa-briefcase" icon-background="blue"/>
+  
+  <!-- FOR PARTY -->
+ 	 <menuitem title="Party" name="menu-party-all" parent="menu-party" action="party.all"/>
+  		<action-view name="party.all" title="All Party" model="com.axelor.gst.app.Party">
+  		<view type="grid" name="party-grid"/>
+  		<view type="form" name="party-form"/>
+  		<view type="cards" name="party-cards"/>
+  		</action-view>
+  
+  <!-- FOR PARTY/CONTACT -->
+  	<menuitem title="Contact" name="menu-contact" parent="menu-party" action="contact.all"/>
+ 		 <action-view name="contact.all" title="All Contact" model="com.axelor.gst.app.Contact">
+  		<view type="grid" name="contact-grid"/>
+  		<view type="form" name="contact-form"/>
+ 	    </action-view>
+  
+  <!-- FOR PARTY/CONFIGURATION -->
+ 	 <menuitem title="Configuration" name="menu-configuration" parent="menu-party"/>
+  
+ 		 <menuitem title="Address" name="menu-address" parent="menu-configuration" action="address.all"/>
+ 		  <action-view name="address.all" title="All Address" model="com.axelor.gst.app.Address">
+ 		 	<view type="grid" name="address-grid"/>
+  			<view type="form" name="address-form"/>
+  		</action-view>
+  <!--  FOR PARTY/CONFIGURATION/CITY -->
+          <menuitem title="City" name="menu-city" parent="menu-configuration" action="city.all"/>
+ 			 <action-view name="city.all" title="All City" model="com.axelor.gst.app.City">
+  			<view type="grid" name="city-grid"/>
+  			<view type="form" name="city-form"/>
+ 			 </action-view>
+  <!-- FOR PARTY/CONFIGURATION/STATE -->
+		  <menuitem title="State" name="menu-state" parent="menu-configuration" action="state.all"/>
+ 			 <action-view name="state.all" title="All State" model="com.axelor.gst.app.State">
+  				<view type="grid" name="state-grid"/>
+  				<view type="form" name="state-form"/>
+  			  </action-view>
+  <!-- FOR PARTY/CONFIGURATION/COUNTRY -->
+ 		  <menuitem title="Country" name="menu-country" parent="menu-configuration" action="country.all"/>
+ 			 <action-view name="country.all" title="All Country" model="com.axelor.gst.app.Country">
+  		     	<view type="grid" name="country-grid"/>
+  				<view type="form" name="country-form"/>
+ 			 </action-view>
+  
+  
+  <!-- FOR PRODUCTS -->
+ <menuitem title="Product" name="menu-product" icon="fa fa-product-hunt" icon-background="green"/>
+  
+  <!--  FOR PRODUCTS/PRODUCTS -->
+ 	 <menuitem title="Product" name="menu-product-all" parent="menu-product" action="product.all"/>
+ 		 <action-view name="product.all" title="All Products" model="com.axelor.gst.app.Product">
+  		    <view type="grid" name="product-grid"/>
+  			<view type="form" name="product-form"/>
+  			<view type="cards" name="product-cards"/>
+  		</action-view>
+   <!--  FOR PRODUCTS/PRODUCT-CATEGORY -->
+ 	 <menuitem title="Product Category" name="menu-product-category" parent="menu-product" action="product.category.all"/>
+ 		 <action-view name="product.category.all" title="Product Category" model="com.axelor.gst.app.ProductCategory">
+  			<view type="grid" name="product-category-grid"/>
+  			<view type="form" name="product-category-form"/>
+ 		 </action-view>
+ <!-- FOR COMPANY -->
+ <menuitem title="Company" name="menu-company" icon="fa fa-building" icon-background="pink"/>
+  <!--  FOR COMPANY/COMPANY -->
+  		<menuitem title="Company" name="menu-company-all" parent="menu-company" action="company.all"/>
+ 		 <action-view name="company.all" title="All Company" model="com.axelor.gst.app.Company">
+ 		 	<view type="grid" name="company-grid"/>
+ 		 	<view type="form" name="company-form"/>
+ 		 </action-view>
+  <!--FOR COMPANY/BANK-ACCOUNT  -->
+ 		 <menuitem title="Bank Account" name="menu-bank-account" parent="menu-company" action="bank.account.all"/>
+ 		 <action-view name="bank.account.all" title="Bank Accounts" model="com.axelor.gst.app.BankAccount">
+ 	     	<view type="grid" name="bank-account-grid"/>
+        	<view type="form" name="bank-account-form"/>
+		  </action-view>
+   <!--FOR COMPANY/SEQUENCE-->
+  		<menuitem title="Sequence" name="menu-sequence" parent="menu-company" action="sequence.all"/>
+ 			 <action-view name="sequence.all" title="Sequences" model="com.axelor.gst.app.Sequence">
+  			<view type="grid" name="sequence-grid"/>
+  			<view type="form" name="sequence-form"/>
+ 		 </action-view>
+   <!--FOR INVOICE  -->
+        <menuitem title="Invoice" name="menu-invoice" icon="fa fa-pencil-square" icon-background="brown"/>
+   <!--FOR INVOICE/CREATEINVOICE  -->
+ 		   <menuitem title="Create Invoice" name="menu-create-invoice" parent="menu-invoice" action="create.invoice"/>
+ 			 <action-view name="create.invoice" title="Create Invoice" model="com.axelor.gst.app.Invoice">
+  			<view type="form" name="invoice-form"/>
+  			<view type="grid" name="invoice-grid"/>
+ 			 </action-view>
+   
+   <!--FOR INVOICE/DRAFTINVOICE  -->
+ 		    <menuitem title="Draft Invoice" name="menu-draft-invoice" parent="menu-invoice" action="invoice.draft"/>
+			  <action-view name="invoice.draft" title="Draft Invoice" model="com.axelor.gst.app.Invoice">
+  				<view type="grid" name="invoice-grid"/>
+  				<view type="form" name="invoice-form"/>
+  				<view type="kanban" name="invoice-kanban"/>
+  					<domain>self.status=:status</domain>
+ 			 	<context name="status" expr="draft"/>
+ 				 </action-view>
+  
+   <!--FOR INVOICE/VALIDATEINVOICE  -->
+ 		    <menuitem title="Validated Invoice" name="menu-validated-invoice" parent="menu-invoice" action="invoice.validated"/>
+ 			 <action-view name="invoice.validated" title="Validated Invoice" model="com.axelor.gst.app.Invoice">
+  				<view type="grid" name="invoice-grid"/>
+  				<view type="form" name="invoice-form"/>
+  				<view type="kanban" name="invoice-kanban"/>
+  			<domain>self.status=:status</domain>
+  			<context name="status" expr="validated"/>
+ 		    </action-view>
+   <!--FOR INVOICE/PAIDINVOICE  -->
+  		     <menuitem title="Paid Invoice" name="menu-paid-invoice" parent="menu-invoice" action="invoice.paid"/>
+ 			 <action-view name="invoice.paid" title="Paid Invoice" model="com.axelor.gst.app.Invoice">
+  				<view type="grid" name="invoice-grid"/>
+  				<view type="form" name="invoice-form"/>
+  				<view type="kanban" name="invoice-kanban"/>
+ 			 	<domain>self.status=:status</domain>
+ 			 	<context name="status" expr="paid"/>
+ 			 </action-view>
+   <!--FOR INVOICE/CANCELLEDINVOICE  -->
+ 		     <menuitem title="Cancelled Invoice" name="menu-cancelled-invoice" parent="menu-invoice" action="invoice.cancelled"/>
+ 			 <action-view name="invoice.cancelled" title="Cancelled Invoice" model="com.axelor.gst.app.Invoice">
+  				<view type="grid" name="invoice-grid"/>
+ 			 	<view type="form" name="invoice-form"/>
+  				<view type="kanban" name="invoice-kanban"/>
+  				<domain>self.status=:status</domain>
+  				<context name="status" expr="cancelled"/>
+ 			 </action-view>
+   <!--FOR INVOICE/ALL-INVOICE  -->
+ 		      <menuitem title="All Invoice" name="menu-all-invoice" parent="menu-invoice" action="invoice.all"/>
+ 				 <action-view name="invoice.all" title="All Invoice" model="com.axelor.gst.app.Invoice">
+ 			 	<view type="grid" name="invoice-grid"/>
+  				<view type="form" name="invoice-form"/>
+  				<view type="kanban" name="invoice-kanban"/>
+  				</action-view>
+  
+  
+ </object-views>

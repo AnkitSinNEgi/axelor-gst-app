@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.4.xsd">
+  
+  <module package="com.axelor.gst.app" name="gst"/>
+  
+  <entity name="Party" cacheable="true">
+  	<string name="reference" readonly="true"/>
+  	<string name="name" required="true" namecolumn="true"/>
+  	<string name="type" required="true" selection="select-party-type" default="company"/>
+  	<boolean name="customer"/>
+  	<boolean name="supplier"/>
+  	<string name="gstin" min="15" max="15"/>
+  	<one-to-many ref="Contact" name="contact"/>
+  	<one-to-many ref="Address" name="address" mappedBy="party"/>
+  </entity>
+  
+ </domain-models>

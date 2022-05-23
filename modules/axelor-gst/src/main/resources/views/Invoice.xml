@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+  
+  <selection name="select-invoice-status">
+  	<option value="draft">Draft</option>
+  	<option value="validated">Validated</option>
+  	<option value="paid">Paid</option>
+  	<option value="cancelled">Cancelled</option>
+  </selection>
+  
+  <grid model="com.axelor.gst.app.Invoice" title="Invoices" name="invoice-grid">
+  	<field name="status"/>
+  	<field name="company"/>
+  	<field name="reference"/>
+  	<field name="invoiceDate"/>
+  	<field name="priority"/>
+  	<field name="party" />
+  	<field name="partyContact"/>
+  	<field name="invoiceAddress"/>
+  	<field name="shippingAddress"/>
+  	<field name="useInvoiceAddressAsShipping"/>
+  	<field name="netAmount"/>
+  	<field name="netIgst" />
+  	<field name="netCgst" />
+  	<field name="netSgst" />
+  	<field name="grossAmount" />
+  	<field name="invoiceItem"/>
+  </grid>
+  
+  <form model="com.axelor.gst.app.Invoice" title="Invoices" name="invoice-form" onSave="com.axelor.gst.invoice.test1">
+<!--   	<toolbar> -->
+<!--   		<button onClick="action-invoice-report-print-invoice" name="printInvoice" icon="fa-print"/> -->
+<!--   	</toolbar> -->
+  	<panel sidebar="true">
+  		<button onClick="" name="draft" title="Draft" hideIf="__this__.status==validated"/>
+  		<button onClick="action-change-status" name="validated" title="Validated"/>
+  		<button onClick="" name="paid" title="Paid"/>
+  		<button onClick="" name="cancelled" title="Cancel"/>
+  	
+  	</panel>
+  	<panel title="Invoice">
+  		<field name="status" readonly="true" widget="NavSelect" colSpan="8"/>
+  		<field name="company" />
+  		<field name="reference"/>
+  		<field name="invoiceDate"/>
+  		<field name="priority"/>
+  		<field name="party" onChange="action-set-party-details"/>
+  		<field name="partyContact"/>
+  		<field name="invoiceAddress"/>
+  		<field name="shippingAddress"/>
+  		<field name="useInvoiceAddressAsShipping"/>
+  		<field name="netAmount" readonly="true"/>
+  		<field name="netIgst" readonly="true"/>
+  		<field name="netCgst" readonly="true"/>
+  		<field name="netSgst" readonly="true"/>
+  		<field name="grossAmount" readonly="true"/> 		
+  	</panel>
+  	<panel-related field="invoiceItem"/>
+  </form>
+  
+  <kanban columnBy="status" model="com.axelor.gst.app.Invoice" sequenceBy="priority" title="Invoices" name="invoice-kanban">
+  	<field name="company"/>
+  	<field name="party"/>
+  	<field name="invoiceDate"/>
+  	<field name="grossAmount"/>
+  	<field name="reference"/>
+  	<template>
+  		<![CDATA[
+  			<div style="text-align:center;">
+  				<h3>{{company.name}}</h3>
+  				Customer: {{party.name}}<br>
+  				Reference: {{reference}}<br>
+  				Invoice Date: {{invoiceDate}}<br>
+  				Total Amount: {{grossAmount}}
+  			</div>
+  		]]>
+  	</template>
+  </kanban>
+  
+  <action-group name="test-group">
+  	<action name="com.axelor.gst.invoice.test1"/>
+  	<action name="com.axelor.gst.invoice.test2"/>
+  </action-group>
+  
+  <action-method name="com.axelor.gst.invoice.test1">
+  		<call class="com.axelor.app.gst.web.InvoiceController" method="testMethod"/>
+  </action-method>
+  
+  <action-method name="action-set-party-details">
+  	<call class="com.axelor.app.gst.web.InvoiceController" method="setPartyDetails"/>
+  </action-method>
+  
+  
+<!--   <action-method name="com.axelor.gst.invoice.test2"> -->
+<!--   	<call class="test" method="test"/> -->
+<!--   </action-method> -->
+<action-record name="action-change-status" model="com.axelor.gst.app.Invoice">
+	<field name="status" expr="validated"/>
+
+</action-record>
+  
+  
+  
+ </object-views>

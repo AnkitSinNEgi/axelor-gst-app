@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+  
+  <dashboard name="welcome-dashboard" title="Welcome">
+  	<dashlet action="chart:invoice-unpaid-customer-chart"/>
+  	<dashlet action="chart:invoice-customer-per-status-chart"/>
+  	<dashlet action="chart:invoice-per-status-amount-chart"/>
+  	<dashlet action="chart:invoice-per-status-chart"/>
+  	<dashlet action="chart:paid-invoice-per-category-per-product"/>
+  	<dashlet  colSpan="12" action="invoice.older"/>
+  </dashboard>
+  
+   <chart name="invoice-unpaid-customer-chart" title="Unpaid invoices per customer" onInit="action-dashboard-method-set-dummy-field">
+  	<search-fields>
+  		<field name="fromDate" type="date" widget="required" x-required="true" title="From"/>
+  		<field name="toDate" type="date" widget="required" x-required="true" title="To"/>
+  	</search-fields>
+  	<dataset type="jpql">
+  		<![CDATA[
+  			Select p.name as customer,count(i) as total 
+  			from Invoice as i,Party as p
+  			where i.party = p.id and i.status not in ('paid','cancelled') and date(i.invoiceDate) between date(:fromDate) and date(:toDate)
+  			group by p
+  		]]>
+  	</dataset>
+  	<category key="customer" title="Customers"/>
+  	<series key="total" type="bar" title="No. of Unpaid Invoices"/>
+  </chart>
+  
+  <chart name="invoice-customer-per-status-chart" title="Customers per state">
+  	<dataset type="jpql">
+  		<![CDATA[
+  			Select s.name as state,count(p) as total
+  			From Invoice as i,Address as a, State as s,Party as p
+  			where p.id=i.party  and s.id=a.state and a.id=i.invoiceAddress
+  			group by s
+  		]]>
+  	</dataset>
+  	<category key="state"/>
+  	<series key="total" type="pie"/>
+  </chart>
+  
+  
+   <chart name="invoice-per-status-amount-chart" title="Amounts per invoice status ">
+  	<dataset type="jpql">
+  		<![CDATA[
+  			Select i.status as status,sum(i.grossAmount) as amount
+  			From Invoice as i
+  			Group by status
+  		]]>
+  	</dataset>
+  	<category key="status" title="Status"/>
+  	<series key="amount" type="bar" title="Amounts"/>
+  </chart>
+  
+    <chart name="invoice-per-status-chart" title="Number of invoices per invoice status ">
+  	<dataset type="jpql">
+  		<![CDATA[
+  			Select i.status as status,count(i) as total
+  			From Invoice as i
+  			Group by status
+  		]]>
+  	</dataset>
+  	<category key="status"/>
+  	<series key="total" type="line"/>
+  </chart>
+  
+  
+   <chart name="paid-invoice-per-category-per-product" title="Paid invoices per category per product" onInit="action-dashboard-method-set-dummy-field">
+  	<search-fields>
+  		<field name="fromDate" type="date" widget="required" x-required="true" title="From"/>
+  		<field name="toDate" type="date" widget="required" x-required="true" title="To"/>
+  	</search-fields>
+  	<dataset type="sql">
+  		<![CDATA[
+			select count(ai) as total,ap.name as pname,apc.name as cname
+  			from axelor_invoice ai 
+  			left join axelor_invoice_line ail 
+  				on ai.id=ail.invoice 
+  			left join axelor_product ap 
+  				on ap.id=ail.product 
+  			left join axelor_product_category apc 
+  				on apc.id=ap.category 
+  			where ai.status='paid' and date(ai.invoice_date) between date(:fromDate) and date(:toDate)
+  			group by apc.id,ap.id;
+  		]]>
+  	</dataset>
+  	<category key="pname" title="Products"/>
+  	<series key="total" type="bar" groupBy="cname" title="No. of Invoices"/>
+  </chart>
+  
+  
+   <action-view name="invoice.older" title="One month old validated and unpaid invoices" model="com.axelor.gst.app.Invoice">
+  	<view type="grid" name="invoice-grid"/>
+  	<view type="form" name="invoice-form"/>
+  	<domain>self.status='validated' and self.invoiceDate &lt; CURRENT_DATE()-30</domain>
+  </action-view>
+  
+   <action-record name="action-dashboard-method-set-dummy-field" model="com.axelor.gst.app.Invoice">
+  	<field name="fromDate" expr="#{LocalDateTime.now().minusDays(LocalDateTime.now().getDayOfMonth()-1)}"/>
+  	<field name="toDate" expr="eval:__datetime__"/>
+  </action-record>
+</object-views>

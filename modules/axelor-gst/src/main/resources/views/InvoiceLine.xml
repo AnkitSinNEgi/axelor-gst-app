@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+
+	<grid model="com.axelor.gst.app.InvoiceLine" title="Invoice Line"
+		name="invoice-line-grid">
+		<field name="product" />
+		<field name="hsbn" />
+		<field name="item" />
+		<field name="qty" />
+		<field name="price" />
+		<field name="netAmount" />
+		<field name="gstRate" />
+		<field name="igst" />
+		<field name="cgst" />
+		<field name="sgst" />
+		<field name="grossAmount" />
+	</grid>
+
+	<form model="com.axelor.gst.app.InvoiceLine" title="Invoice Line"
+		name="invoice-line-form">
+		<panel>
+			<field name="product" onChange="invoiceLine-action-group-set-product-onChange"/>
+			<field name="hsbn" readonly="true" />
+			<field name="item" />
+			<field name="qty" onChange="invoiceLine-action-group-set-product-onChange"/>
+			<field name="price" readonly="true" />
+			<field name="netAmount" readonly="true" />
+			<field name="gstRate" readonly="true" />
+			<field name="igst" readonly="true" />
+			<field name="cgst" readonly="true" />
+			<field name="sgst" readonly="true" />
+			<field name="grossAmount" readonly="true" onChange=""/>
+		</panel>
+	</form>
+	
+	<action-group name="invoiceLine-action-group-set-product-onChange">
+		<action name="invoiceLine-action-method-setCostPrice"/>
+		<action name="invoiceLine-action-method-setNetAmount"/>
+		<action name="invoiceLine-action-method-set-product-info"/>
+		<action name="invoiceLine-action-method-set-sAndCgst"/>
+		<action name="invoiceLine-action--method-setGrossAmount"/>
+	</action-group>
+	
+	
+
+	<action-method name="invoiceLine-action-method-setCostPrice">
+		<call class="com.axelor.app.gst.web.InvoiceLineController" method="setPrice" />
+	</action-method>
+	
+	<action-method name="invoiceLine-action-method-setNetAmount">
+		<call class="com.axelor.app.gst.web.InvoiceLineController" method="setNetAmount"/>
+	</action-method>
+	
+	<action-method name="invoiceLine-action-method-set-product-info">
+	<call class="com.axelor.app.gst.web.InvoiceLineController" method="setProductInfo"/>	
+	</action-method>
+	
+	<action-method name="invoiceLine-action-method-set-sAndCgst">
+		<call class="com.axelor.app.gst.web.InvoiceLineController" method="setGst"/>
+	</action-method>
+	
+	<action-method name="invoiceLine-action--method-setGrossAmount">
+	<call class="com.axelor.app.gst.web.InvoiceLineController" method="setGrossAmount"/>
+	</action-method>
+	
+<!-- 	<action-method name="invoiceLine-action-method-setCgst"> -->
+<!-- 	<call class="com.axelor.app.gst.web.InvoiceLineController" method="setCgst"/> -->
+<!-- 	</action-method> -->
+
+
+
+
+
+
+
+
+</object-views>

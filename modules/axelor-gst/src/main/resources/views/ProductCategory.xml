@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+  
+  <grid model="com.axelor.gst.app.ProductCategory" title="Product Category" name="product-category-grid">
+  	<field name="name"/>
+  	<field name="code"/>
+  	<field name="gstRate"/>
+  </grid>
+  
+  <form model="com.axelor.gst.app.ProductCategory" title="Product Category" name="product-category-form">
+  	<panel titlw="Product Category">
+  		<field name="name"/>
+  		<field name="code"/>
+  		<field name="gstRate"/>
+  	</panel>
+  </form>
+  
+ </object-views>

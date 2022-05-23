@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+  
+  <grid model="com.axelor.gst.app.Product" title="Products" name="product-grid">
+  	<toolbar>
+  	<button onClick="" name="createInvoice" title="Create Invoice"/>
+  	  	<button onClick="" name="Print" title="Print" icon="fa-regular fa-print"/>
+  	</toolbar>
+  	<field name="name"/>
+  	<field name="code"/>
+  	<field name="hsbn"/>
+  	<field name="category"/>
+  	<field name="salePrice"/>
+  	<field name="costPrice"/>
+  	<field name="gstRate"/>
+  </grid>
+  
+  <form model="com.axelor.gst.app.Product" title="Products" name="product-form">
+  	<panel title="Product Details">
+  		<field name="name"/>
+  		<field name="code"/>
+  		<field name="hsbn"/>
+  		<field name="category" onChange="action-product-record-change-gst-rate"/>
+  		<field name="salePrice"/>
+  		<field name="costPrice"/>
+  		<field name="gstRate"/>
+  		<field name="image" widget="image"/>
+  	</panel>
+  </form>
+  
+  <cards name="product-cards" model="com.axelor.gst.app.Product" title="Products">
+  		<field name="name"/>
+  		<field name="code"/>
+  		<field name="hsbn"/>
+  		<field name="category" />
+  		<field name="salePrice"/>
+  		<field name="costPrice"/>
+  		<field name="gstRate"/>
+  		<field name="image"/>
+  		<template>
+  			<![CDATA[
+  				<div class="span4 card-image">
+  					<img ng-src="{{$image('image', 'content')}}" style="width: 100%; height: 100%; object-fit: contain;" />
+  				</div>
+  				<div style="text-align:center; color:blue;" class="span8">
+  					<h3>{{name}}</h3>
+  					Code: {{code}} <br>
+  					Category: {{category.name}} <br>
+  					Sale Price: {{salePrice}} <br>
+  					GST Rate: {{gstRate}} <br>
+  				</div>
+  			]]>
+  		</template>
+  </cards>
+  
+  <action-view name="action-product-view-create-new-invoice" title="Invoice" model="com.axelor.gst.app.Invoice">
+  	<view type="form" name="invoice-form"/>
+  	<context name="productId" expr="eval:__ids__"/>
+  </action-view>
+  
+  <action-record name="action-product-record-change-gst-rate" model="com.axelor.gst.app.Product">
+  	<field name="gstRate" expr="eval:category.gstRate"/>
+  </action-record>
+  
+  <action-report output="product-${date}${time}" name="action-product-report-print-product-details" design="product.rptdesign" format="pdf">
+  	<param name="logoUrl" expr="call:com.axelor.gst.controller.InvoiceController:getLogoUrl()"/>
+  	<param name="companyId" expr="eval:__repo__(Company).all().fetchOne().id"/>
+  	<param name="productIds" expr="call:com.axelor.gst.controller.ProductController:getProductIds(_ids)"/>
+  </action-report>
+  
+ </object-views>

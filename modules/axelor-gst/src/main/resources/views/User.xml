@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.4.xsd">
+  
+  <form name="user-form" title="User" model="com.axelor.auth.db.User" id="axelor-gst-user-form" extension="true">
+  <extend target="panel[@title='Overview']//field[@name='language']">
+  	<insert position="after">
+  		<field name="company"/>
+  	</insert>
+  </extend>
+  </form>
+  
+ </object-views>
